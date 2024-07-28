@@ -16,6 +16,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 library work;
+use work.benchclock;
 
 entity fpga_bench is
 end fpga_bench;
@@ -30,8 +31,8 @@ begin
 
     -- instanciate benchclock
 
-    bc: entity work.benchclock
-        --generic map(2)
+    bench_clock_1: entity benchclock
+        generic map(2.5 ns) -- 200MHz
         port map(c);
 
 end fpga_bench_arch;

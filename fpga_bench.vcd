@@ -1,5 +1,5 @@
 $date
-  Sun Jul 28 21:08:06 2024
+  Sun Jul 28 21:27:25 2024
 $end
 $version
   GHDL v0
@@ -13,7 +13,7 @@ $scope module std_logic_1164 $end
 $upscope $end
 $scope module fpga_bench $end
 $var reg 1 ! c $end
-$scope module bc $end
+$scope module bench_clock_1 $end
 $var reg 1 " o $end
 $var reg 1 # s $end
 $upscope $end
@@ -23,7 +23,15 @@ $enddefinitions $end
 1!
 1"
 1#
+#2500000
+0!
+0"
+0#
 #5000000
+1!
+1"
+1#
+#7500000
 0!
 0"
 0#
@@ -31,7 +39,15 @@ $enddefinitions $end
 1!
 1"
 1#
+#12500000
+0!
+0"
+0#
 #15000000
+1!
+1"
+1#
+#17500000
 0!
 0"
 0#
@@ -39,7 +55,15 @@ $enddefinitions $end
 1!
 1"
 1#
+#22500000
+0!
+0"
+0#
 #25000000
+1!
+1"
+1#
+#27500000
 0!
 0"
 0#
@@ -47,7 +71,11 @@ $enddefinitions $end
 1!
 1"
 1#
-#35000000
+#32500000
 0!
 0"
 0#
+#35000000
+1!
+1"
+1#
