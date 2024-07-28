@@ -11,3 +11,4 @@ This first part is the development of the code to configure an FPGA.
 The code is simulated using "GHDL".
 The simulation produces an output in the form of a VCD file.
 This file can be displayed using "GTKwave".
+

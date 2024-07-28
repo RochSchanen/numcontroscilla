@@ -1,4 +1,7 @@
 v 4
-file . "./fpga_bench.vhdl" "f6bca9a9a20600b60648a95243095bd8f67949d5" "20240728182933.852":
-  entity fpga_bench at 18( 479) + 0 on 13;
-  architecture fpga_bench_arch of fpga_bench at 24( 532) + 0 on 14;
+file . "./benchclock.vhdl" "4d96dc7bf1ded081637fcadc05d9d618dba66840" "20240728200806.643":
+  entity benchclock at 20( 619) + 0 on 21;
+  architecture benchclock_arch of benchclock at 34( 835) + 0 on 22;
+file . "./fpga_bench.vhdl" "23fd289449a68c9041e709addd8b28ac3003833e" "20240728200806.650":
+  entity fpga_bench at 15( 449) + 0 on 23;
+  architecture fpga_bench_arch of fpga_bench at 23( 546) + 0 on 24;

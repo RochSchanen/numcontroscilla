@@ -4,6 +4,7 @@ STOP_TIME="35ns"
 
 # analyze
 echo "ghdl -a ..."
+ghdl -a ./benchclock.vhdl
 ghdl -a ./fpga_bench.vhdl
 
 # elaborate
@@ -15,4 +16,3 @@ echo "ghdl -r ..."
 ghdl -r fpga_bench --stop-time=${STOP_TIME} --vcd=fpga_bench.vcd
 
 echo "done."
-
