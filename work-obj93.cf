@@ -1,7 +1,13 @@
 v 4
-file . "./fpga_bench.vhdl" "dd16d7cbf950a17ab974852030b8bb33717b8bfc" "20240728202725.377":
-  entity fpga_bench at 15( 449) + 0 on 53;
-  architecture fpga_bench_arch of fpga_bench at 24( 567) + 0 on 54;
-file . "./benchclock.vhdl" "4d96dc7bf1ded081637fcadc05d9d618dba66840" "20240728202725.368":
-  entity benchclock at 20( 619) + 0 on 51;
-  architecture benchclock_arch of benchclock at 34( 835) + 0 on 52;
+file . "./benchreset.vhdl" "cc3dfb7dc062e7aee8739f1eff0963c0a639831d" "20240728220155.622":
+  entity benchreset at 19( 624) + 0 on 177;
+  architecture benchreset_arch of benchreset at 33( 836) + 0 on 178;
+file . "./fifobuf.vhdl" "dfb99adc9cc2a7498eace1568d43c047d1f8d07f" "20240728220155.631":
+  entity fifobuf at 21( 705) + 0 on 179;
+  architecture fifobuf_arch of fifobuf at 36( 1155) + 0 on 180;
+file . "./fpga_bench.vhdl" "e3c1b2eba95b9cccb0043041b8ecaf4fe1579d0d" "20240728220155.640":
+  entity fpga_bench at 15( 399) + 0 on 181;
+  architecture fpga_bench_arch of fpga_bench at 26( 556) + 0 on 182;
+file . "./benchclock.vhdl" "4d96dc7bf1ded081637fcadc05d9d618dba66840" "20240728220155.613":
+  entity benchclock at 20( 619) + 0 on 175;
+  architecture benchclock_arch of benchclock at 34( 835) + 0 on 176;
