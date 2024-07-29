@@ -1,11 +1,12 @@
 #!/bin/bash
 
-STOP_TIME="160ns"
+STOP_TIME="5000ns"
 
 # analyze
 echo "ghdl -a ./bench/*"
 ghdl -a ./bench/benchclock.vhdl
 ghdl -a ./bench/benchreset.vhdl
+ghdl -a --ieee=synopsys ./bench/benchrom.vhdl
 
 echo "ghdl -a ./nco/*"
 ghdl -a ./nco/fifobuf.vhdl
@@ -15,13 +16,13 @@ ghdl -a ./nco/placc.vhdl
 ghdl -a ./nco/plnco.vhdl
 
 echo "ghdl -a fpga_bench.vhdl"
-ghdl -a ./fpga_bench.vhdl
+ghdl -a -fsynopsys ./fpga_bench.vhdl
 
 # elaborate
 echo "ghdl -e fpga_bench"
-ghdl -e fpga_bench
+ghdl -e -fsynopsys fpga_bench
 
 # run and export
 echo "run"
-ghdl -r fpga_bench --stop-time=${STOP_TIME} --vcd=fpga_bench.vcd
+ghdl -r -fsynopsys fpga_bench --stop-time=${STOP_TIME} --vcd=fpga_bench.vcd
 echo "done."

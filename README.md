@@ -28,6 +28,12 @@ This file can be displayed using "GTKwave" (28 July 2024).
 
 - PLCNT (nco): This is a pipelined counter. The counter counts on each rising edge of the clock signal when the count enable (carry in) input level is high. There is a fixed latency of N clock pulses where N is the size of the counter. However, the longest of the path delay is very short which allows high clock rates. After the initial latency, a new count value is available every new clock pulse. The only advantage of this design is to be able to use high clock rates (29 July 2024).
 
+- PLACC (29 July 2024)
+
+- PLNCO (29 July 2024)
+
+- BENCHROM (29 July 2024)
+
 ### Libraries:
 
 - Bench components are grouped in the <u>./bench</u> directory (29 July 2024).

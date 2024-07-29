@@ -28,14 +28,19 @@ end fpga_bench;
 architecture fpga_bench_arch of fpga_bench is
 
     -- configuration
+
     constant ACCSIZE   : integer := 4;
     constant CNTSIZE   : integer := 4;
+    constant FILENAME  : string  := "./bench/SIN256x8.txt";
+    constant ADDRSIZE  : integer := 8;
+    constant DATASIZE  : integer := 8;
 
     -- signals
     signal r : std_logic; -- reset
     signal c : std_logic; -- clock
-    signal q : std_logic_vector(ACCSIZE+CNTSIZE-1 downto 0); -- value
+    signal a : std_logic_vector(ACCSIZE+CNTSIZE-1 downto 0); -- address
     signal o : std_logic; -- carry
+    signal q : std_logic_vector(DATASIZE-1 downto 0); -- output
 
 begin
 
@@ -51,8 +56,13 @@ begin
 
     -- instanciate pipelined counter
     pl_nco_1: entity plnco
-        generic map(ACCSIZE, CNTSIZE) -- 4 and 4
-        port map(r, c, "1111", q, o);
+        generic map(ACCSIZE, CNTSIZE)
+        port map(r, c, "0111", a, o);
+
+    -- instanciate bench rom
+    bench_rom_1: entity benchrom
+        generic map(FILENAME, ADDRSIZE, DATASIZE)
+        port map(a, r, q);
 
 end fpga_bench_arch;
 
