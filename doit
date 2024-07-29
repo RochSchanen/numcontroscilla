@@ -3,18 +3,21 @@
 STOP_TIME="50ns"
 
 # analyze
-echo "ghdl -a ..."
+echo "ghdl -a ./bench/*"
 ghdl -a ./bench/benchclock.vhdl
 ghdl -a ./bench/benchreset.vhdl
-ghdl -a ./fifobuf.vhdl
+
+echo "ghdl -a ./nco/*"
+ghdl -a ./nco/fifobuf.vhdl
+
+echo "ghdl -a fpga_bench.vhdl"
 ghdl -a ./fpga_bench.vhdl
 
 # elaborate
-echo "ghdl -e ..."
+echo "ghdl -e fpga_bench"
 ghdl -e fpga_bench
 
 # run and export
-echo "ghdl -r ..."
+echo "run"
 ghdl -r fpga_bench --stop-time=${STOP_TIME} --vcd=fpga_bench.vcd
-
 echo "done."
