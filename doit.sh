@@ -4,8 +4,8 @@ STOP_TIME="50ns"
 
 # analyze
 echo "ghdl -a ..."
-ghdl -a ./benchclock.vhdl
-ghdl -a ./benchreset.vhdl
+ghdl -a ./bench/benchclock.vhdl
+ghdl -a ./bench/benchreset.vhdl
 ghdl -a ./fifobuf.vhdl
 ghdl -a ./fpga_bench.vhdl
 
