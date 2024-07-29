@@ -1,22 +1,25 @@
 v 4
-file . "./nco/plcnt.vhdl" "70597d8ef1690414290294e8cfc2a244a31da115" "20240729140710.363":
-  entity plcnt at 17( 524) + 0 on 489;
-  architecture plcnt_arch of plcnt at 36( 1078) + 0 on 490;
-file . "./nco/addsync.vhdl" "6ffdc85d96a5b5cbfbe5f1bb3aaacb9d5b019eb1" "20240729140710.352":
-  entity addsync at 18( 566) + 0 on 487;
-  architecture addsync_arch of addsync at 32( 984) + 0 on 488;
-file . "./bench/benchreset.vhdl" "af737c6c0d6f38273d70e154840c529ae568b1c9" "20240729140710.333":
-  entity benchreset at 19( 625) + 0 on 483;
-  architecture benchreset_arch of benchreset at 37( 939) + 0 on 484;
-file . "./fpga_bench.vhdl" "41ad96b512dad33f0050ef3df65b535261bdfed4" "20240729140710.386":
-  entity fpga_bench at 15( 399) + 0 on 493;
-  architecture fpga_bench_arch of fpga_bench at 28( 612) + 0 on 494;
-file . "./bench/benchclock.vhdl" "c541f05978a789ee12df3db5ae856745ff19cad5" "20240729140710.323":
-  entity benchclock at 20( 620) + 0 on 481;
-  architecture benchclock_arch of benchclock at 38( 938) + 0 on 482;
-file . "./nco/fifobuf.vhdl" "dfb99adc9cc2a7498eace1568d43c047d1f8d07f" "20240729140710.342":
-  entity fifobuf at 21( 705) + 0 on 485;
-  architecture fifobuf_arch of fifobuf at 36( 1155) + 0 on 486;
-file . "./nco/placc.vhdl" "6029933c7ff057fa93d023afc2e844c33bdbb724" "20240729140710.374":
-  entity placc at 18( 588) + 0 on 491;
-  architecture placc_arch of placc at 37( 1197) + 0 on 492;
+file . "./nco/plcnt.vhdl" "3d25ae2aa68ab843ef72d10a577f15ce6a963fb9" "20240729145812.072":
+  entity plcnt at 17( 524) + 0 on 623;
+  architecture plcnt_arch of plcnt at 36( 1067) + 0 on 624;
+file . "./nco/addsync.vhdl" "6ffdc85d96a5b5cbfbe5f1bb3aaacb9d5b019eb1" "20240729145812.060":
+  entity addsync at 18( 566) + 0 on 621;
+  architecture addsync_arch of addsync at 32( 984) + 0 on 622;
+file . "./bench/benchreset.vhdl" "af737c6c0d6f38273d70e154840c529ae568b1c9" "20240729145812.037":
+  entity benchreset at 19( 625) + 0 on 617;
+  architecture benchreset_arch of benchreset at 37( 939) + 0 on 618;
+file . "./fpga_bench.vhdl" "e93d4bd31b948666fca348e5d533cd884ff9ed25" "20240729145812.109":
+  entity fpga_bench at 15( 399) + 0 on 629;
+  architecture fpga_bench_arch of fpga_bench at 28( 612) + 0 on 630;
+file . "./bench/benchclock.vhdl" "c541f05978a789ee12df3db5ae856745ff19cad5" "20240729145812.025":
+  entity benchclock at 20( 620) + 0 on 615;
+  architecture benchclock_arch of benchclock at 38( 938) + 0 on 616;
+file . "./nco/fifobuf.vhdl" "dfb99adc9cc2a7498eace1568d43c047d1f8d07f" "20240729145812.048":
+  entity fifobuf at 21( 705) + 0 on 619;
+  architecture fifobuf_arch of fifobuf at 36( 1155) + 0 on 620;
+file . "./nco/placc.vhdl" "04d58d719d9287626780f7438baa85bbf253ae98" "20240729145812.085":
+  entity placc at 18( 588) + 0 on 625;
+  architecture placc_arch of placc at 37( 1186) + 0 on 626;
+file . "./nco/plnco.vhdl" "025f4082f2489fbfd8c0699a16e1849c3ef0856f" "20240729145812.096":
+  entity plnco at 19( 677) + 0 on 627;
+  architecture plnco_arch of plnco at 40( 1281) + 0 on 628;

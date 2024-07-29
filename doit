@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STOP_TIME="200ns"
+STOP_TIME="160ns"
 
 # analyze
 echo "ghdl -a ./bench/*"
@@ -12,6 +12,7 @@ ghdl -a ./nco/fifobuf.vhdl
 ghdl -a ./nco/addsync.vhdl
 ghdl -a ./nco/plcnt.vhdl
 ghdl -a ./nco/placc.vhdl
+ghdl -a ./nco/plnco.vhdl
 
 echo "ghdl -a fpga_bench.vhdl"
 ghdl -a ./fpga_bench.vhdl
