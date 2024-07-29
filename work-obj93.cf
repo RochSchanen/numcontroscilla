@@ -1,13 +1,19 @@
 v 4
-file . "./bench/benchreset.vhdl" "cc3dfb7dc062e7aee8739f1eff0963c0a639831d" "20240729072006.737":
-  entity benchreset at 19( 624) + 0 on 249;
-  architecture benchreset_arch of benchreset at 33( 836) + 0 on 250;
-file . "./fpga_bench.vhdl" "e3c1b2eba95b9cccb0043041b8ecaf4fe1579d0d" "20240729072006.757":
-  entity fpga_bench at 15( 399) + 0 on 253;
-  architecture fpga_bench_arch of fpga_bench at 26( 556) + 0 on 254;
-file . "./bench/benchclock.vhdl" "4d96dc7bf1ded081637fcadc05d9d618dba66840" "20240729072006.728":
-  entity benchclock at 20( 619) + 0 on 247;
-  architecture benchclock_arch of benchclock at 34( 835) + 0 on 248;
-file . "./nco/fifobuf.vhdl" "dfb99adc9cc2a7498eace1568d43c047d1f8d07f" "20240729072006.746":
-  entity fifobuf at 21( 705) + 0 on 251;
-  architecture fifobuf_arch of fifobuf at 36( 1155) + 0 on 252;
+file . "./nco/fifobuf.vhdl" "dfb99adc9cc2a7498eace1568d43c047d1f8d07f" "20240729101206.823":
+  entity fifobuf at 21( 705) + 0 on 393;
+  architecture fifobuf_arch of fifobuf at 36( 1155) + 0 on 394;
+file . "./bench/benchclock.vhdl" "c541f05978a789ee12df3db5ae856745ff19cad5" "20240729101206.804":
+  entity benchclock at 20( 620) + 0 on 389;
+  architecture benchclock_arch of benchclock at 38( 938) + 0 on 390;
+file . "./fpga_bench.vhdl" "9b314c0a5450d70ed4eaf5dc01cf920ef5e393a4" "20240729101206.853":
+  entity fpga_bench at 15( 399) + 0 on 399;
+  architecture fpga_bench_arch of fpga_bench at 28( 612) + 0 on 400;
+file . "./bench/benchreset.vhdl" "af737c6c0d6f38273d70e154840c529ae568b1c9" "20240729101206.813":
+  entity benchreset at 19( 625) + 0 on 391;
+  architecture benchreset_arch of benchreset at 37( 939) + 0 on 392;
+file . "./nco/addsync.vhdl" "6ffdc85d96a5b5cbfbe5f1bb3aaacb9d5b019eb1" "20240729101206.832":
+  entity addsync at 18( 566) + 0 on 395;
+  architecture addsync_arch of addsync at 32( 984) + 0 on 396;
+file . "./nco/plcnt.vhdl" "70597d8ef1690414290294e8cfc2a244a31da115" "20240729101206.842":
+  entity plcnt at 17( 524) + 0 on 397;
+  architecture plcnt_arch of plcnt at 36( 1078) + 0 on 398;

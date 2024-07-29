@@ -13,11 +13,13 @@
 ---------------------------------------------------------------------
 
 -------------------------------------------------
---                BENCHRESET
+--                BENCH RESET
 -------------------------------------------------
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+
+-------------------------------------------------
 
 entity benchreset is
 
@@ -29,6 +31,8 @@ entity benchreset is
 
 -- done
 end benchreset;
+
+-------------------------------------------------
 
 architecture benchreset_arch of benchreset is
 
@@ -63,3 +67,5 @@ begin
 
 -- done
 end benchreset_arch;
+
+-------------------------------------------------

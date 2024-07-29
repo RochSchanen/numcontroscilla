@@ -14,11 +14,13 @@
 ---------------------------------------------------------------------
 
 -------------------------------------------------
---                BENCHCLOCK
+--                BENCH CLOCK
 -------------------------------------------------
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+
+-------------------------------------------------
 
 entity benchclock is
 
@@ -30,6 +32,8 @@ entity benchclock is
 
 -- done
 end benchclock;
+
+-------------------------------------------------
 
 architecture benchclock_arch of benchclock is
 
@@ -67,3 +71,5 @@ begin
 
 -- done
 end benchclock_arch;
+
+-------------------------------------------------
