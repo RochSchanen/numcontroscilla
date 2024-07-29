@@ -49,9 +49,9 @@ begin
         port map(r);
 
     -- instanciate pipelined counter
-    pl_cnt_1: entity plcnt
+    pl_acc_1: entity placc
         generic map(SIZE)
-        port map(r, c, '1', q, o);
+        port map(r, c, "1111", q, o);
 
 end fpga_bench_arch;
 

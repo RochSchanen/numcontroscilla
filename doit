@@ -11,6 +11,7 @@ echo "ghdl -a ./nco/*"
 ghdl -a ./nco/fifobuf.vhdl
 ghdl -a ./nco/addsync.vhdl
 ghdl -a ./nco/plcnt.vhdl
+ghdl -a ./nco/placc.vhdl
 
 echo "ghdl -a fpga_bench.vhdl"
 ghdl -a ./fpga_bench.vhdl

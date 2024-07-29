@@ -12,7 +12,7 @@ This is an attempt at developing a numerically controlled oscillator.
 This first part is the development of the code to configure an FPGA.
 The code is simulated using "GHDL".
 The simulation produces an output in the form of a VCD file.
-This file can be displayed using "GTKwave".
+This file can be displayed using "GTKwave" (28 July 2024).
 
 	Status
 
