@@ -1,28 +1,33 @@
 #!/bin/bash
 
-STOP_TIME="5000ns"
+STOP_TIME="100ns"
 
 # analyze
-echo "ghdl -a ./bench/*"
+echo "analyse ./bench/*"
 ghdl -a ./bench/benchclock.vhdl
 ghdl -a ./bench/benchreset.vhdl
 ghdl -a --ieee=synopsys ./bench/benchrom.vhdl
 
-echo "ghdl -a ./nco/*"
+echo "analyse ./nco/*"
 ghdl -a ./nco/fifobuf.vhdl
 ghdl -a ./nco/addsync.vhdl
 ghdl -a ./nco/plcnt.vhdl
 ghdl -a ./nco/placc.vhdl
 ghdl -a ./nco/plnco.vhdl
 
-echo "ghdl -a fpga_bench.vhdl"
-ghdl -a -fsynopsys ./fpga_bench.vhdl
+echo "analyse ./plpr/*"
+ghdl -a ./plpr/plpr.vhdl
+
+echo "analyse plpr_bench.vhdl"
+# ghdl -a -fsynopsys ./fpga_bench.vhdl
+ghdl -a -fsynopsys ./plpr_bench.vhdl
 
 # elaborate
-echo "ghdl -e fpga_bench"
-ghdl -e -fsynopsys fpga_bench
+echo "elaborate plpr_bench"
+# ghdl -e -fsynopsys fpga_bench
+ghdl -e -fsynopsys plpr_bench
 
 # run and export
 echo "run"
-ghdl -r -fsynopsys fpga_bench --stop-time=${STOP_TIME} --vcd=fpga_bench.vcd
+ghdl -r -fsynopsys plpr_bench --stop-time=${STOP_TIME} --vcd=.outputs/bench.vcd
 echo "done."
