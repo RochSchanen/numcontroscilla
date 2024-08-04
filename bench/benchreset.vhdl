@@ -36,9 +36,9 @@ end benchreset;
 
 architecture benchreset_arch of benchreset is
 
-    -- define reset state
+    -- reset state
+    signal s : STD_LOGIC; -- leave uninitialised
     --signal s : STD_LOGIC := '0';
-    signal s : STD_LOGIC;
 
 begin
 
@@ -46,6 +46,11 @@ begin
 
     begin
 
+        -- leave reset signal uninitialised for 1 ns
+        -- (used for debugging the start up process:
+        -- for example, checking for spurious signals
+        -- during start up and remove them where
+        -- necessary)
         wait for 1 ns;
 
         -- set reset state low
