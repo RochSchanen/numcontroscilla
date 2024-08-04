@@ -39,19 +39,45 @@ end entity plpr;
 -------------------------------------------------
 
 architecture plpr_arch of plpr is
+    
+    -- defines bit products in a double array of terms
+    type terms is array (0 to size-1, 0 to size-1) of std_logic;
+
+    -- terms signals
+    signal pp: terms;
 
 begin
 
-    process
-    begin
+    -- generate bit products network
+    SUBNET_A: for i in 0 to 3 generate
+        SUBNET_B: for j in 0 to 3 generate
+            pp(i, j) <= a(i) AND b(j);
+        end generate;
+    end generate;
 
-        p <= "00000000";
+    -- 0
+    p(0) <= pp(0, 0);
 
-        -- nothing 
-        report "done";
-        wait;
+    -- 1
+    p(1) <= pp(1, 0);
 
-    end process;
+    -- 2
+    p(2) <= pp(2, 0);
+
+    -- 3
+    p(3) <= pp(3, 0);
+
+    -- 4
+    p(4) <= pp(3, 1);
+
+    -- 5
+    p(5) <= pp(3, 2);
+
+    -- 6
+    p(6) <= pp(3, 3);
+
+    -- 7
+    p(7) <= '0';
 
 end architecture plpr_arch;
 
