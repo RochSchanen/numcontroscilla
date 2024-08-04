@@ -54,7 +54,7 @@ begin
         generic map(3 ns)
         port map(r);
 
-    -- instanciate pipelined counter
+    -- instanciate pipelined nco
     pl_nco_1: entity plnco
         generic map(ACCSIZE, CNTSIZE)
         port map(r, c, "0111", a, o);
