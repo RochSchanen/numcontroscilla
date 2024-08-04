@@ -2,7 +2,7 @@
 
 -- file: benchreset.vhdl
 -- content: reset switch to be used by the fpga_bench
--- Created: 2024 july 28
+-- Created: 2024 July 28
 -- Author: Roch Schanen
 -- comments:
 -- Simulate an external reset switch for the FPGA bench.
@@ -54,7 +54,7 @@ begin
         wait for 1 ns;
 
         -- set reset state low
-        s <= '0';
+        s <= '0';   
 
         -- wait
         wait for PERIOD;
