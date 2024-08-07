@@ -22,7 +22,7 @@ echo analyse .\plpr\*
 ghdl -a .\plpr\plpr.vhdl
 
 echo analyse plpr_bench.vhdl
-rem ghdl -a -fsynopsys .\fpga_bench.vhdl
+rem ghdl -a --ieee=synopsys .\fpga_bench.vhdl
 ghdl -a --ieee=synopsys .\plpr_bench.vhdl
 
 rem ---------
@@ -30,7 +30,7 @@ rem elaborate
 rem ---------
 
 echo elaborate plpr_bench
-rem ghdl -e -fsynopsys fpga_bench
+rem ghdl -e --ieee=synopsys fpga_bench
 ghdl -e --ieee=synopsys plpr_bench
 
 rem --------------
