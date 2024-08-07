@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STOP_TIME="100ns"
+STOP_TIME="150ns"
 
 # analyze
 echo "analyse ./bench/*"

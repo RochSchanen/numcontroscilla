@@ -51,7 +51,7 @@ begin
     -- instanciate pipelined nco
     pl_pr_1: entity plpr
         generic map(FACTORSIZE)
-        port map(r, c, "0001", "0001", q);
+        port map(r, c, "1101", "1101", q);
 
 end plpr_bench_arch;
 
