@@ -1,5 +1,5 @@
 $date
-  Sun Aug  4 20:25:51 2024
+  Wed Aug 07 10:04:05 2024
 $end
 $version
   GHDL v0
@@ -7,11 +7,6 @@ $end
 $timescale
   1 fs
 $end
-$scope module standard $end
-$upscope $end
-$scope module std_logic_1164 $end
-$upscope $end
-$scope module plpr_bench $end
 $var reg 1 ! r $end
 $var reg 1 " c $end
 $var reg 8 # q[7:0] $end
@@ -29,54 +24,16 @@ $var reg 1 ) t $end
 $var reg 4 * a[3:0] $end
 $var reg 4 + b[3:0] $end
 $var reg 8 , p[7:0] $end
-$comment pp is not handled $end
-$scope module subnet_a(0) $end
-$scope module subnet_b(0) $end
-$upscope $end
-$scope module subnet_b(1) $end
-$upscope $end
-$scope module subnet_b(2) $end
-$upscope $end
-$scope module subnet_b(3) $end
-$upscope $end
-$upscope $end
-$scope module subnet_a(1) $end
-$scope module subnet_b(0) $end
-$upscope $end
-$scope module subnet_b(1) $end
-$upscope $end
-$scope module subnet_b(2) $end
-$upscope $end
-$scope module subnet_b(3) $end
-$upscope $end
-$upscope $end
-$scope module subnet_a(2) $end
-$scope module subnet_b(0) $end
-$upscope $end
-$scope module subnet_b(1) $end
-$upscope $end
-$scope module subnet_b(2) $end
-$upscope $end
-$scope module subnet_b(3) $end
-$upscope $end
-$upscope $end
-$scope module subnet_a(3) $end
-$scope module subnet_b(0) $end
-$upscope $end
-$scope module subnet_b(1) $end
-$upscope $end
-$scope module subnet_b(2) $end
-$upscope $end
-$scope module subnet_b(3) $end
-$upscope $end
-$upscope $end
-$upscope $end
+$var reg 7 - c0[0:6] $end
+$var reg 6 . c1[1:6] $end
+$var reg 5 / c2[2:6] $end
+$var reg 4 0 c3[3:6] $end
 $upscope $end
 $enddefinitions $end
 #0
 U!
 1"
-b00000001 #
+b00000000 #
 1$
 1%
 U&
@@ -85,7 +42,11 @@ U(
 1)
 b0001 *
 b0001 +
-b00000001 ,
+b00000000 ,
+bUUUUUUU -
+bUUUUUU .
+bUUUUU /
+bUUUU 0
 #1000000
 0!
 0&

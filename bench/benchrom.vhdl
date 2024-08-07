@@ -47,7 +47,7 @@ end entity benchrom;
 architecture benchrom_arch of benchrom is
 
     -- define geometry (build core type)
-    type CORE is array (0 to 2**AL-1) 
+    type CORE is array (0 to integer'(2)**AL-1) 
         of std_logic_vector(DW-1 downto 0);
 
     -- init rom from file function
@@ -64,7 +64,7 @@ architecture benchrom_arch of benchrom is
     begin
 
         -- load data from each lines
-        for i in 0 to 2**AL-1 loop
+        for i in 0 to integer'(2)**AL-1 loop
             readline (h, l);  -- get line
             read (l, c(i));   -- convert line to data
         end loop;
