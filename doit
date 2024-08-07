@@ -30,4 +30,8 @@ ghdl -e -fsynopsys plpr_bench
 # run and export
 echo "run"
 ghdl -r -fsynopsys plpr_bench --stop-time=${STOP_TIME} --vcd=.outputs/bench.vcd
+
+# clean up
+rm work-obj93.cf
+
 echo "done."

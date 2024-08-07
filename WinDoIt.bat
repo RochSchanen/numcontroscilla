@@ -39,4 +39,15 @@ rem --------------
 
 echo run
 ghdl -r --ieee=synopsys plpr_bench --stop-time=%STOP_TIME% --vcd=.outputs\bench.vcd
+
+rem --------
+rem clean up
+rem --------
+
+del work-obj93.cf
+
+rem ----
+rem done
+rem ----
+
 echo done.
