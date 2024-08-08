@@ -1,6 +1,6 @@
 @echo off
 
-set STOP_TIME=100ns
+set STOP_TIME=1300ns
 
 rem -------
 rem analyze
@@ -10,6 +10,7 @@ echo analyse .\bench\*
 ghdl -a .\bench\benchclock.vhdl
 ghdl -a .\bench\benchreset.vhdl
 ghdl -a --ieee=synopsys .\bench\benchrom.vhdl
+ghdl -a --ieee=synopsys .\bench\benchcounter.vhdl
 
 echo analyse .\nco\*
 ghdl -a .\nco\fifobuf.vhdl

@@ -7,7 +7,7 @@
 -- comments:
 -- synchronous with the rising edge of trigger signal t
 -- asynchronously cleared when reset signal r is low
--- generic size has been tested for integers larger than 4      <- not yet
+-- generic size has been tested for integers larger than 4 <- only 4 so far.
 -- compute the product of two binary numbers
 
 -- positively defined first
