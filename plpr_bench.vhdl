@@ -43,6 +43,7 @@ architecture plpr_bench_arch of plpr_bench is
 
     signal q : std_logic_vector(2*SIZE-1 downto 0); -- plpr output
 
+    -- display function
     function to_string(v : std_logic_vector) return string is
         variable s : string(v'length downto 1);
     begin
@@ -84,12 +85,13 @@ begin
         generic map(SIZE)
         port map(r, t, a, b, q);    -- scan through all
 
-    process(r, t) is
-    begin
-        if rising_edge(t) then
-            report to_string(a) & "x" & to_string(b) & "=" & to_string(q) ;
-        end if;
-    end process;
+    -- synchronised reporting (use file outputs instead for cleaner testing)
+    --process(r, t) is
+    --begin
+    --    if rising_edge(t) then
+    --        report to_string(a) & "x" & to_string(b) & "=" & to_string(q) ;
+    --    end if;
+    --end process;
 
 end plpr_bench_arch;
 
