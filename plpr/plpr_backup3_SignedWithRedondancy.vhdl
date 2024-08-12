@@ -77,12 +77,9 @@ begin
     -- BIT PRODUCTS
     ---------------
     subnet_a: for j in 0 to size-1 generate
-    subnet_b: for i in 0 to size-1 generate
-    
-        -- instantiate signals to bit products    
-        pi(i,j) <= a(i) and b(j);
-    
-    end generate;
+        subnet_b: for i in 0 to size-1 generate
+            pi(i,j) <= a(i) and b(j);
+        end generate;
     end generate;
 
     ----------------------------
@@ -91,26 +88,26 @@ begin
 
     -- instantiate input fifo buffer:
     fifo_in_00: entity fifobuf
-        generic map(0+0)            -- fifo length
-        port map(r, t,              -- sync signals
-            pi(n(0,0), m(0,0)),     -- input product a(n) & b(m)
-            db(0,0));               -- output to cell 0,0
+        generic map(0+0)        -- fifo length
+        port map(r, t,          -- sync signals
+            pi(n(0,0), m(0,0)), -- input product a(n) & b(m)
+            db(0,0));           -- output to cell 0,0
 
     -- instantiate sync adder
     async_00: entity addsync
-        port map(r, t,              -- sync signals
-            '0',                    -- input data A has no cell above
-            db(0,0),                -- input data B from input buffer
-            '0',                    -- carry in has no cell on the right
-            do(0,0),                -- data  out
-            co(0,0));               -- carry out
+        port map(r, t,  -- sync signals
+            '0',        -- input data A has no cell above
+            db(0,0),    -- input data B from input buffer
+            '0',        -- carry in has no cell on the right
+            do(0,0),    -- data  out
+            co(0,0));   -- carry out
 
     -- instantiate output fifo buffer
     fifo_out_00: entity fifobuf
         generic map(2*(7-0))
-        port map(r, t,              -- sync signals
-            do(0,0),                -- input from last cell
-            p(0));                  -- output to port
+        port map(r, t,  -- sync signals
+            do(0,0),    -- input from last cell
+            p(0));      -- output to port
 
     -----------------
     -- TOP LINE (j=0)
@@ -126,12 +123,12 @@ begin
 
         -- instantiate sync adder
         async_i0: entity addsync
-            port map(r, t,          -- sync signals
-                '0',                -- input data A has no cell above
-                db(i,0),            -- input data B from input buffer
-                co(i-1,0),          -- carry in from cell on the right
-                do(i,0),            -- data  out
-                co(i,0));           -- carry out
+            port map(r, t,  -- sync signals
+                '0',        -- input data A has no cell above
+                db(i,0),    -- input data B from input buffer
+                co(i-1,0),  -- carry in from cell on the right
+                do(i,0),    -- data  out
+                co(i,0));   -- carry out
 
     end generate subnet_i0;
 
@@ -139,27 +136,27 @@ begin
     -- UPPER TRIANGLE (i>j)
     -----------------------
     subnet_j: for j in 1 to 7 generate
-    subnet_i: for i in 1 to 7 generate
-    upper_triangle: if i > j generate
+        subnet_i: for i in 1 to 7 generate
+            upper_triangle: if i > j generate
 
-        -- instantiate input fifo buffer:
-        fifo_in_ij: entity fifobuf
-            generic map(i+j)        -- fifo length
-            port map(r, t,          -- sync signals
-                pi(n(i,j), m(i,j)), -- input product a(n) & b(m)
-                db(i,j));           -- output to cell i,j
+                -- instantiate input fifo buffer:
+                fifo_in_ij: entity fifobuf
+                    generic map(i+j)        -- fifo length
+                    port map(r, t,          -- sync signals
+                        pi(n(i,j), m(i,j)), -- input product a(n) & b(m)
+                        db(i,j));           -- output to cell i,j
 
-        -- instantiate sync adder
-        async_ij: entity addsync
-            port map(r, t,  -- sync signals
-                do(i, j-1), -- input data A from cell above
-                db(i, j),   -- input data B from input buffer
-                co(i-1, j), -- carry in from cell on the right
-                do(i, j),   -- data  out
-                co(i, j));  -- carry out
+                -- instantiate sync adder
+                async_ij: entity addsync
+                    port map(r, t,  -- sync signals
+                        do(i, j-1), -- input data A from cell above
+                        db(i, j),   -- input data B from input buffer
+                        co(i-1, j), -- carry in from cell on the right
+                        do(i, j),   -- data  out
+                        co(i, j));  -- carry out
 
-    end generate upper_triangle;
-    end generate subnet_i;
+            end generate upper_triangle;
+        end generate subnet_i;
     end generate subnet_j;
 
     --------------------

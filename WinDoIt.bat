@@ -1,6 +1,6 @@
 @echo off
 
-set STOP_TIME=1500ns
+set STOP_TIME=50ns
 
 rem -------
 rem analyze
@@ -20,26 +20,30 @@ ghdl -a .\nco\placc.vhdl
 ghdl -a .\nco\plnco.vhdl
 
 echo analyse .\plpr\*
-ghdl -a .\plpr\plpr.vhdl
+ghdl -a --ieee=synopsys .\plpr\plpr.vhdl
+ghdl -a .\plpr\fifostream.vhdl
 
-echo analyse plpr_bench.vhdl
+echo analyse bench
 rem ghdl -a --ieee=synopsys .\fpga_bench.vhdl
-ghdl -a --ieee=synopsys .\plpr_bench.vhdl
+rem ghdl -a --ieee=synopsys .\plpr_bench.vhdl
+ghdl -a fifostream_bench.vhdl
 
 rem ---------
 rem elaborate
 rem ---------
 
-echo elaborate plpr_bench
+echo elaborate
 rem ghdl -e --ieee=synopsys fpga_bench
-ghdl -e --ieee=synopsys plpr_bench
+rem ghdl -e --ieee=synopsys plpr_bench
+ghdl -e fifostream_bench
 
 rem --------------
 rem run and export
 rem --------------
 
 echo run
-ghdl -r --ieee=synopsys plpr_bench --stop-time=%STOP_TIME% --vcd=.outputs\bench.vcd
+rem ghdl -r --ieee=synopsys plpr_bench --stop-time=%STOP_TIME% --vcd=.outputs\bench.vcd
+ghdl -r fifostream_bench --stop-time=%STOP_TIME% --vcd=.outputs\bench.vcd
 
 rem --------
 rem clean up
