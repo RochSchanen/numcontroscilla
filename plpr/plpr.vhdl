@@ -1,155 +1,193 @@
----------------------------------------------------------------------
-
+--------------------------------------------------------------------------------
 -- file: plpr.vhdl
--- content: pipelined product
--- Created: 2024 august 4
--- Author: Roch Schanen
+-- content: pipelined signed product
+-- created: 2024 august 10
+-- author: roch schanen
 -- comments:
 -- synchronous with the rising edge of trigger signal t
 -- asynchronously cleared when reset signal r is low
--- generic size has been tested for integers larger than 4 <- only 4 so far.
--- compute the product of two binary numbers
-
--- positively defined first
--- symmtric size to start, asymetric later
-
----------------------------------------------------------------------
+-- generic size has been tested for integers larger than 4 <- only 4 so far
+-- compute the product of two signed binary numbers, the result is signed
+-- 
 
 -------------------------------------------------
---           PIPELINED PRODUCT ARITHMETIC
+--      PIPELINED SIGNED PRODUCT ARITHMETIC
 -------------------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+
 
 library work;
 use work.all;
 
--------------------------------------------------
-
+--------------
 entity plpr is
-    generic (size : integer := 4);                      -- factors size (4 x 4)
+    generic (size : integer := 4);                      -- factors size
     port (r : in  std_logic;                            -- reset (active low)
           t : in  std_logic;                            -- trigger (rising edge)
-          a : in  std_logic_vector(size-1 downto 0);    -- input A (4)
-          b : in  std_logic_vector(size-1 downto 0);    -- input B (4)
-          p : out std_logic_vector(2*size-1 downto 0)); -- product AB (8)
+          a : in  std_logic_vector(size-1 downto 0);    -- input a (4 bits)
+          b : in  std_logic_vector(size-1 downto 0);    -- input b (4 bits)
+          p : out std_logic_vector(2*size-1 downto 0)); -- product ab (8 bits)
 end entity plpr;
 
--------------------------------------------------
-
+---------------------------------
 architecture plpr_arch of plpr is
-    
-    type PP is array (0 to 3, 0 to 3) of std_logic;
 
-    -- sums
-    signal di: PP; -- add sync input b
-    signal do: PP; -- add sync sum out
-    signal ci: PP; -- add sync carry in
-    signal co: PP; -- add sync carry out
-    signal pi: PP; -- fifo pipe input
-    
-    -- carry
-    signal cdo: PP; -- add sync sum out
-    signal cc: PP; -- add sync carry out
+    -------------------------------------------------------------
+    type type_1 is array (0 to size-1, 0 to size-1) of std_logic;
+    type type_2 is array (0 to 2*size-1, 0 to 2*size-1) of std_logic;
+
+    ----------------------------------
+    -- connections to the bit products
+    -- (the full square is used)
+    signal pi: type_1;
+
+    ---------------------------------------
+    -- connections to the add-sync entities
+    -- (only top-left triangle plus diagonal are used)
+    signal db, do, co: type_2;
+
+    -----------------------------------------
+    -- data bit row n from cell position i, j
+    function n(i: integer; j: integer) return integer is    
+        variable x: integer;
+    begin
+        if j > 3 then x := 3; else x := j; end if;
+        return x;
+    end function;
+
+    --------------------------------------------
+    -- data bit column m from cell position i, j
+    function m(i: integer; j: integer) return integer is    
+        variable x: integer;
+    begin
+        if i-j < size then x := i-j; else x := 3; end if;
+        return x;
+    end function;
 
 begin
 
-    -- ##########################################
+--------------------------
+-- INSTANCIATE NETWORKS --
+--------------------------
 
-    pi(0, 0) <= a(0) AND b(0);
-    pi(0, 1) <= a(0) AND b(1);
-    pi(0, 2) <= a(0) AND b(2);
-    pi(0, 3) <= a(0) AND b(3);
-    pi(1, 0) <= a(1) AND b(0);
-    pi(1, 1) <= a(1) AND b(1);
-    pi(1, 2) <= a(1) AND b(2);
-    pi(1, 3) <= a(1) AND b(3);
-    pi(2, 0) <= a(2) AND b(0);
-    pi(2, 1) <= a(2) AND b(1);
-    pi(2, 2) <= a(2) AND b(2);
-    pi(2, 3) <= a(2) AND b(3);
-    pi(3, 0) <= a(3) AND b(0);
-    pi(3, 1) <= a(3) AND b(1);
-    pi(3, 2) <= a(3) AND b(2);
-    pi(3, 3) <= a(3) AND b(3);
+    ---------------
+    -- BIT PRODUCTS
+    ---------------
+    subnet_a: for j in 0 to size-1 generate
+        subnet_b: for i in 0 to size-1 generate
+            pi(i,j) <= a(i) and b(j);
+        end generate;
+    end generate;
 
-    -- ##########################################
+    ----------------------------
+    -- TOP-RIGHT CELL (i=0, j=0)
+    ----------------------------
 
-    -- 0
-    fifo_00: entity fifobuf generic map(0) port map(r, t, pi(0, 0), di(0, 0));
-    -- 1
-    fifo_01: entity fifobuf generic map(1) port map(r, t, pi(0, 1), di(0, 1));
-    fifo_10: entity fifobuf generic map(2) port map(r, t, pi(1, 0), di(1, 0));
-    -- 2
-    fifo_02: entity fifobuf generic map(2) port map(r, t, pi(0, 2), di(0, 2));
-    fifo_11: entity fifobuf generic map(3) port map(r, t, pi(1, 1), di(1, 1));
-    fifo_20: entity fifobuf generic map(4) port map(r, t, pi(2, 0), di(2, 0));
-    -- 3
-    fifo_03: entity fifobuf generic map(3) port map(r, t, pi(0, 3), di(0, 3));
-    fifo_12: entity fifobuf generic map(4) port map(r, t, pi(1, 2), di(1, 2));
-    fifo_21: entity fifobuf generic map(5) port map(r, t, pi(2, 1), di(2, 1));
-    fifo_30: entity fifobuf generic map(6) port map(r, t, pi(3, 0), di(3, 0));
-    -- 4 ---------------------------------------------------------------------
-    fifo_13: entity fifobuf generic map(4) port map(r, t, pi(1, 3), di(1, 3));
-    fifo_22: entity fifobuf generic map(5) port map(r, t, pi(2, 2), di(2, 2));
-    fifo_31: entity fifobuf generic map(6) port map(r, t, pi(3, 1), di(3, 1));
-    -- 5
-    fifo_23: entity fifobuf generic map(5) port map(r, t, pi(2, 3), di(2, 3));
-    fifo_32: entity fifobuf generic map(6) port map(r, t, pi(3, 2), di(3, 2));
-    -- 6
-    fifo_33: entity fifobuf generic map(6) port map(r, t, pi(3, 3), di(3, 3));
+    -- instantiate input fifo buffer:
+    fifo_in_00: entity fifobuf
+        generic map(0+0)        -- fifo length
+        port map(r, t,          -- sync signals
+            pi(n(0,0), m(0,0)), -- input product a(n) & b(m)
+            db(0,0));           -- output to cell 0,0
 
-    -- ##########################################
+    -- instantiate sync adder
+    async_00: entity addsync
+        port map(r, t,  -- sync signals
+            '0',        -- input data A has no cell above
+            db(0,0),    -- input data B from input buffer
+            '0',        -- carry in has no cell on the right
+            do(0,0),    -- data  out
+            co(0,0));   -- carry out
 
-    -- 0
-    async_00: entity addsync port map(r, t,       '0', di(0, 0),      '0',  do(0, 0), co(0, 0));
-    -- 1
-    async_01: entity addsync port map(r, t,       '0', di(0, 1), co(0, 0),  do(0, 1), co(0, 1));
-    async_10: entity addsync port map(r, t,  do(0, 1), di(1, 0),      '0',  do(1, 0), co(1, 0));
-    -- 2
-    async_02: entity addsync port map(r, t,       '0', di(0, 2), co(0, 1),  do(0, 2), co(0, 2));
-    async_11: entity addsync port map(r, t,  do(0, 2), di(1, 1), co(1, 0),  do(1, 1), co(1, 1));
-    async_20: entity addsync port map(r, t,  do(1, 1), di(2, 0),      '0',  do(2, 0), co(2, 0));
-    -- 3
-    async_03: entity addsync port map(r, t,       '0', di(0, 3), co(0, 2),  do(0, 3), co(0, 3));
-    async_12: entity addsync port map(r, t,  do(0, 3), di(1, 2), co(1, 1),  do(1, 2), co(1, 2));
-    async_21: entity addsync port map(r, t,  do(1, 2), di(2, 1), co(2, 0),  do(2, 1), co(2, 1));
-    async_30: entity addsync port map(r, t,  do(2, 1), di(3, 0),      '0',  do(3, 0), co(3, 0));
-    -- 4 ---------------------------------------------------------------------------------------
-    async_13: entity addsync port map(r, t,       '0', di(1, 3), co(0, 3),  do(1, 3), co(1, 3));
-    async_22: entity addsync port map(r, t,  do(1, 3), di(2, 2), co(1, 2),  do(2, 2), co(2, 2));
-    async_31: entity addsync port map(r, t,  do(2, 2), di(3, 1), co(2, 1),  do(3, 1), co(3, 1));
-    bsync_00: entity addsync port map(r, t,  do(3, 1),      '0', co(3, 0), cdo(0, 0), cc(0, 0));
-    -- 5
-    async_23: entity addsync port map(r, t,       '0', di(2, 3), co(1, 3),  do(2, 3), co(2, 3));
-    async_32: entity addsync port map(r, t,  do(2, 3), di(3, 2), co(2, 2),  do(3, 2), co(3, 2));
-    bsync_10: entity addsync port map(r, t,  do(3, 2),      '0', co(3, 1), cdo(1, 0), cc(1, 0));
-    bsync_11: entity addsync port map(r, t, cdo(1, 0),      '0', cc(0, 0), cdo(1, 1), cc(1, 1));
-    -- 6
-    async_33: entity addsync port map(r, t,       '0', di(3, 3), co(2, 3),  do(3, 3), co(3, 3));
-    bsync_20: entity addsync port map(r, t,  do(3, 3),      '0', co(3, 2), cdo(2, 0), cc(2, 0));
-    bsync_21: entity addsync port map(r, t, cdo(2, 0),      '0', cc(1, 0), cdo(2, 1), cc(2, 1));
-    bsync_22: entity addsync port map(r, t, cdo(2, 1),      '0', cc(1, 1), cdo(2, 2), cc(2, 2));
-    -- 7
-    bsync_30: entity addsync port map(r, t,       '0',      '0', co(3, 3), cdo(3, 0), cc(3, 0));
-    bsync_31: entity addsync port map(r, t, cdo(3, 0),      '0', cc(2, 0), cdo(3, 1), cc(3, 1));
-    bsync_32: entity addsync port map(r, t, cdo(3, 1),      '0', cc(2, 1), cdo(3, 2), cc(3, 2));
-    bsync_33: entity addsync port map(r, t, cdo(3, 2),      '0', cc(2, 2), cdo(3, 3), cc(3, 3));
+    -- instantiate output fifo buffer
+    fifo_out_00: entity fifobuf
+        generic map(2*(7-0))
+        port map(r, t,  -- sync signals
+            do(0,0),    -- input from last cell
+            p(0));      -- output to port
 
-    -- ##########################################
+    -----------------
+    -- TOP LINE (j=0)
+    -----------------
+    subnet_i0: for i in 1 to 7 generate
 
-    fifo_0: entity fifobuf generic map(10) port map (r, t,  do(0, 0), p(0));
-    fifo_1: entity fifobuf generic map( 8) port map (r, t,  do(1, 0), p(1));
-    fifo_2: entity fifobuf generic map( 6) port map (r, t,  do(2, 0), p(2));
-    fifo_3: entity fifobuf generic map( 4) port map (r, t,  do(3, 0), p(3));   
-    ------------------------------------------------------------------------
-    fifo_4: entity fifobuf generic map( 3) port map (r, t, cdo(0, 0), p(4));
-    fifo_5: entity fifobuf generic map( 2) port map (r, t, cdo(1, 1), p(5));
-    fifo_6: entity fifobuf generic map( 1) port map (r, t, cdo(2, 2), p(6));
-    fifo_7: entity fifobuf generic map( 0) port map (r, t, cdo(3, 3), p(7));
+        -- instantiate input fifo buffer:
+        fifo_in_i0: entity fifobuf
+            generic map(i+0)        -- fifo length
+            port map(r, t,          -- sync signals
+                pi(n(i,0), m(i,0)), -- input product a(n) & b(m)
+                db(i,0));           -- output to cell i,0
 
-    -- ##########################################
+        -- instantiate sync adder
+        async_i0: entity addsync
+            port map(r, t,  -- sync signals
+                '0',        -- input data A has no cell above
+                db(i,0),    -- input data B from input buffer
+                co(i-1,0),  -- carry in from cell on the right
+                do(i,0),    -- data  out
+                co(i,0));   -- carry out
+
+    end generate subnet_i0;
+
+    -----------------------
+    -- UPPER TRIANGLE (i>j)
+    -----------------------
+    subnet_j: for j in 1 to 7 generate
+        subnet_i: for i in 1 to 7 generate
+            upper_triangle: if i > j generate
+
+                -- instantiate input fifo buffer:
+                fifo_in_ij: entity fifobuf
+                    generic map(i+j)        -- fifo length
+                    port map(r, t,          -- sync signals
+                        pi(n(i,j), m(i,j)), -- input product a(n) & b(m)
+                        db(i,j));           -- output to cell i,j
+
+                -- instantiate sync adder
+                async_ij: entity addsync
+                    port map(r, t,  -- sync signals
+                        do(i, j-1), -- input data A from cell above
+                        db(i, j),   -- input data B from input buffer
+                        co(i-1, j), -- carry in from cell on the right
+                        do(i, j),   -- data  out
+                        co(i, j));  -- carry out
+
+            end generate upper_triangle;
+        end generate subnet_i;
+    end generate subnet_j;
+
+    --------------------
+    -- DIAGONALE (i = j)
+    --------------------
+    subnet_k: for k in 1 to 7 generate
+
+        -- instantiate input fifo buffer:
+        fifo_in_kk: entity fifobuf
+            generic map(k+k)        -- fifo length
+            port map(r, t,          -- sync signals
+                pi(n(k,k), m(k,k)), -- input product a(n) & b(m)
+                db(k,k));           -- output to cell k,k
+
+        -- instantiate sync adder
+        async_kk: entity addsync
+            port map(r, t,  -- sync signals
+                do(k, k-1), -- input data A from cell above
+                db(k, k),   -- input data B from input buffer
+                '0',        -- carry has no cell on the right
+                do(k, k),   -- data  out
+                co(k, k));  -- carry out
+
+        -- instantiate output fifo buffer
+        fifo_out_kk: entity fifobuf
+            generic map(2*(7-k))
+            port map(r, t,  -- sync signals
+                do(k,k),    -- input from last cell
+                p(k));      -- output to port
+
+    end generate subnet_k;
 
 end architecture plpr_arch;
 

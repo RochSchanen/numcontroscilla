@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STOP_TIME="150ns"
+STOP_TIME="1500ns"
 
 # analyze
 echo "analyse ./bench/*"
@@ -17,11 +17,11 @@ ghdl -a ./nco/placc.vhdl
 ghdl -a ./nco/plnco.vhdl
 
 echo "analyse ./plpr/*"
-ghdl -a ./plpr/plpr.vhdl
+ghdl -a --ieee=synopsys ./plpr/plpr.vhdl
 
 echo "analyse plpr_bench.vhdl"
 # ghdl -a -fsynopsys ./fpga_bench.vhdl
-ghdl -a -fsynopsys ./plpr_bench.vhdl
+ghdl -a --ieee=synopsys ./plpr_bench.vhdl
 
 # elaborate
 echo "elaborate plpr_bench"
