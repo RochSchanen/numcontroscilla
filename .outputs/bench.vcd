@@ -1,5 +1,5 @@
 $date
-  Mon Aug 12 15:45:38 2024
+  Tue Aug 13 05:18:00 2024
 $end
 $version
   GHDL v0
@@ -7,162 +7,208 @@ $end
 $timescale
   1 fs
 $end
+$scope module standard $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module fifostream_bench $end
 $var reg 1 ! r $end
 $var reg 1 " t $end
 $var reg 5 # q[4:0] $end
+$var reg 1 $ test $end
 $scope module bench_reset_1 $end
-$var reg 1 $ o $end
-$var reg 1 % s $end
+$var reg 1 % o $end
+$var reg 1 & s $end
 $upscope $end
 $scope module bench_clock_1 $end
-$var reg 1 & o $end
-$var reg 1 ' s $end
+$var reg 1 ' o $end
+$var reg 1 ( s $end
 $upscope $end
 $scope module fifo_stream_1 $end
-$var reg 1 ( r $end
-$var reg 1 ) t $end
-$var reg 1 * i $end
-$var reg 5 + b[4:0] $end
-$var reg 5 , bf[4:0] $end
+$var reg 1 ) r $end
+$var reg 1 * t $end
+$var reg 1 + i $end
+$var reg 5 , b[4:0] $end
+$var reg 5 - bf[4:0] $end
 $scope module ngates $end
+$upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 U!
 1"
-bUUU11 #
+bUUUUU #
 U$
 U%
-1&
+U&
 1'
-U(
-1)
+1(
+U)
 1*
-bUUU11 +
-bUUU11 ,
+U+
+bUUUUU ,
+bUUUUU -
 #1000000
 0!
-b00001 #
-0$
+b0000U #
 0%
-0(
-b00001 +
-b00001 ,
+0&
+0)
+b0000U ,
+b0000U -
 #2500000
 0"
-0&
 0'
-0)
+0(
+0*
 #4000000
 1!
-1$
 1%
-1(
+1&
+1)
 #5000000
 1"
-b00011 #
-1&
+b000U0 #
+0$
 1'
-1)
-b00011 +
-b00011 ,
+1(
+1*
+0+
+b000U0 ,
+b000U0 -
 #7500000
 0"
-0&
 0'
-0)
+0(
+0*
 #10000000
 1"
-b00111 #
-1&
+b00U00 #
 1'
-1)
-b00111 +
-b00111 ,
+1(
+1*
+b00U00 ,
+b00U00 -
+#12000000
+b00U0X #
+1$
+1+
+b00U0X ,
+b00U0X -
 #12500000
 0"
-0&
 0'
-0)
+0(
+0*
 #15000000
 1"
-b01111 #
-1&
+b0U0X1 #
 1'
-1)
-b01111 +
-b01111 ,
+1(
+1*
+b0U0X1 ,
+b0U0X1 -
 #17500000
 0"
-0&
 0'
-0)
+0(
+0*
+#19000000
+b0U0XX #
+0$
+0+
+b0U0XX ,
+b0U0XX -
 #20000000
 1"
-b11111 #
-1&
+bU0XX0 #
 1'
-1)
-b11111 +
-b11111 ,
+1(
+1*
+bU0XX0 ,
+bU0XX0 -
 #22500000
 0"
-0&
 0'
-0)
+0(
+0*
 #25000000
 1"
-1&
+b0XX00 #
 1'
-1)
+1(
+1*
+b0XX00 ,
+b0XX00 -
+#26000000
+b0XX0X #
+1$
+1+
+b0XX0X ,
+b0XX0X -
 #27500000
 0"
-0&
 0'
-0)
+0(
+0*
 #30000000
 1"
-1&
+bXX0X1 #
 1'
-1)
+1(
+1*
+bXX0X1 ,
+bXX0X1 -
 #32500000
 0"
-0&
 0'
-0)
+0(
+0*
 #35000000
 1"
-1&
+bX0X11 #
 1'
-1)
+1(
+1*
+bX0X11 ,
+bX0X11 -
 #37500000
 0"
-0&
 0'
-0)
+0(
+0*
 #40000000
 1"
-1&
+b0X111 #
 1'
-1)
+1(
+1*
+b0X111 ,
+b0X111 -
 #42500000
 0"
-0&
 0'
-0)
+0(
+0*
 #45000000
 1"
-1&
+bX1111 #
 1'
-1)
+1(
+1*
+bX1111 ,
+bX1111 -
 #47500000
 0"
-0&
 0'
-0)
+0(
+0*
 #50000000
 1"
-1&
+b11111 #
 1'
-1)
+1(
+1*
+b11111 ,
+b11111 -

@@ -23,10 +23,10 @@ echo analyse .\plpr\*
 ghdl -a --ieee=synopsys .\plpr\plpr.vhdl
 ghdl -a .\plpr\fifostream.vhdl
 
-echo analyse bench
+echo analyse .\*_bench.vhdl
 rem ghdl -a --ieee=synopsys .\fpga_bench.vhdl
 rem ghdl -a --ieee=synopsys .\plpr_bench.vhdl
-ghdl -a fifostream_bench.vhdl
+ghdl -a .\fifostream_bench.vhdl
 
 rem ---------
 rem elaborate

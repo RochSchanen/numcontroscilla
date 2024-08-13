@@ -1,3 +1,5 @@
+# test result for unsigned binary product 4 bits x 4 bits: passed
+
 T = r"""
 .\plpr_bench.vhdl:90:13:@0ms:(report note): 0000x0000=00000000
 .\plpr_bench.vhdl:90:13:@5ns:(report note): 0000x0000=00000000

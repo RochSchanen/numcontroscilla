@@ -33,14 +33,14 @@ architecture fifostream_arch of fifostream is
     signal bf: std_logic_vector(size downto 0);
 
 begin
-
+    
     -- the least significant bit (LSB)
     -- is always a copy of the input port
     bf(0) <= i;
 
     -- the full buffer is available at any time
     b <= bf;
-    
+
     -----------------------------
     -- case N = 0
     -----------------------------
@@ -70,16 +70,25 @@ begin
             -- synchronous shift
             elsif rising_edge(t) then
                 
-                -- shift buffer bits (low -> high)
-                --for n in 0 to size-1 loop
-                --    bf(n+1) <= bf(n);
-                --end loop;
-
-                bf(4) <= bf(3);
-                bf(3) <= bf(2);
-                bf(2) <= bf(1);
-                bf(1) <= bf(0);
+ 
+                --bf(4) <= bf(3);
+                --bf(3) <= bf(2);
+                --bf(2) <= bf(1);
+                --bf(1) <= bf(0);
                 
+                -- the above code does NOT require
+                -- the line "bf(0) <= i;" as I would
+                -- expect, NOT like the code below.
+
+                ---- shift stream bits
+                for n in size downto 1 loop
+                    bf(n) <= bf(n-1);
+                end loop;
+
+                -- next line required only when
+                -- using the loop above. Why?
+                bf(0) <= i;
+
             end if;
 
         end process;

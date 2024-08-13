@@ -1,8 +1,11 @@
 #!/bin/bash
 
-STOP_TIME="1500ns"
+STOP_TIME="50ns"
 
+#########
 # analyze
+#########
+
 echo "analyse ./bench/*"
 ghdl -a ./bench/benchclock.vhdl
 ghdl -a ./bench/benchreset.vhdl
@@ -18,21 +21,38 @@ ghdl -a ./nco/plnco.vhdl
 
 echo "analyse ./plpr/*"
 ghdl -a --ieee=synopsys ./plpr/plpr.vhdl
+ghdl -a ./plpr/fifostream.vhdl
 
-echo "analyse plpr_bench.vhdl"
+echo "analyse ./*_bench.vhdl"
 # ghdl -a -fsynopsys ./fpga_bench.vhdl
-ghdl -a --ieee=synopsys ./plpr_bench.vhdl
+# ghdl -a --ieee=synopsys ./plpr_bench.vhdl
+ghdl -a ./fifostream_bench.vhdl
 
+###########
 # elaborate
-echo "elaborate plpr_bench"
+###########
+
+echo "elaborate"
 # ghdl -e -fsynopsys fpga_bench
-ghdl -e -fsynopsys plpr_bench
+# ghdl -e -fsynopsys plpr_bench
+ghdl -e fifostream_bench
 
+################
 # run and export
-echo "run"
-ghdl -r -fsynopsys plpr_bench --stop-time=${STOP_TIME} --vcd=.outputs/bench.vcd
+################
 
+echo "run"
+# ghdl -r -fsynopsys plpr_bench --stop-time=${STOP_TIME} --vcd=.outputs/bench.vcd
+ghdl -r fifostream_bench --stop-time=${STOP_TIME} --vcd=.outputs/bench.vcd
+
+##########
 # clean up
+##########
+
 rm work-obj93.cf
+
+######
+# done
+######
 
 echo "done."

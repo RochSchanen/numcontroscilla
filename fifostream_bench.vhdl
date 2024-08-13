@@ -33,6 +33,8 @@ architecture fifostream_bench_arch of fifostream_bench is
     signal t : std_logic;                       -- bench clock
     signal q : std_logic_vector(SIZE downto 0); -- fifostream output
 
+    signal test: std_logic;
+
 begin
 
     -- instanciate bench reset
@@ -48,6 +50,26 @@ begin
     -- instanciate fifo stream
     fifo_stream_1: entity fifostream
         generic map(SIZE)
-        port map(r, t, '1', q);
+        port map(r, t, test, q);
+
+    process
+    begin
+
+        wait for 5 ns;
+        test <= '0';
+
+        wait for 7 ns;
+        test <= '1';
+
+        wait for 7 ns;
+        test <= '0';
+
+        wait for 7 ns;
+        test <= '1';
+
+        wait;
+
+    end process;
+
 
 end fifostream_bench_arch;

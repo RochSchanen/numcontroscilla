@@ -34,10 +34,20 @@ This file can be displayed using "GTKwave" (28 July 2024).
 
 - BENCHROM (bench): The NCO output is normally used as a pointer to the table that defines the periodic signal to be generated. The NCO generates the phase of the signal, and the table output is the signal amplitude at that phase. The table is generally stored in some part of the FPGA dedicated as memory. The memory access usually depends on the manufacture. Here, a memory entity is made available in the bench library that is fairly generic. The VHDL description of the memory is fixed while content of the memory is configured in a separate text file. A rom content that form a harmonic signal can be generated using the simple python tool **makerom.py**. Two parameters are required: The table address size and the data size. (30 July 2024).
 
+- BENCHCOUNTER (bench): This is a generic counter device for the FPGA bench. The size of the counter is configurable (default size is 8 bits). The counting is triggered on the rising edge of the clock and can be reset asynchronously. The state of the counter is not initialised (must use reset). Maybe the intial state 
+should be configurable (future). (9 August 2024)
+
+- PLPR (plpr):
+
+- FIFOSTREAM (plpr): (13 August 2024)
+
 ### Libraries:
 
 - Bench components are grouped in the <u>./bench</u> directory (29 July 2024).
 - The numerically controlled oscillator components are grouped in the <u>./nco</u> directory (29 July 2024).
+- pipelined binary product (multiplication) components are grouped in the <u>./plpr</u> directory. (4 August 2024)
+
+### Test benches:
 
 ### note to self:
 
