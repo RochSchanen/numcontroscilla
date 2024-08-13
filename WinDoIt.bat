@@ -1,6 +1,6 @@
 @echo off
 
-set STOP_TIME=50ns
+set STOP_TIME=100ns
 
 rem -------
 rem analyze

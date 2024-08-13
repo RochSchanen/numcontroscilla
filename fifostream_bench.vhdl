@@ -26,14 +26,15 @@ end fifostream_bench;
 architecture fifostream_bench_arch of fifostream_bench is
 
     -- configuration
-    constant SIZE : integer := 4;
+    constant size : integer := 5;
 
     -- signals
     signal r : std_logic;                       -- bench reset
     signal t : std_logic;                       -- bench clock
-    signal q : std_logic_vector(SIZE downto 0); -- fifostream output
+    signal q : std_logic_vector(size downto 0); -- fifostream output
 
-    signal test: std_logic;
+    -- test input
+    signal i: std_logic := '0';
 
 begin
 
@@ -47,25 +48,22 @@ begin
         generic map(2.5 ns) -- 200MHz
         port map(t);        -- t: clock signal
 
-    -- instanciate fifo stream
+    ---- instanciate fifo stream
     fifo_stream_1: entity fifostream
-        generic map(SIZE)
-        port map(r, t, test, q);
+        generic map(size)
+        port map(r, t, i, q);
 
     process
     begin
 
-        wait for 5 ns;
-        test <= '0';
+        wait for 8 ns;
+        i <= '1';
 
-        wait for 7 ns;
-        test <= '1';
+        wait for 40 ns;
+        i <= '0';
 
-        wait for 7 ns;
-        test <= '0';
-
-        wait for 7 ns;
-        test <= '1';
+        wait for 40 ns;
+        i <= '1';
 
         wait;
 
