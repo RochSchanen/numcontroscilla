@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STOP_TIME="300ns"
+STOP_TIME="1500ns"
 
 #########
 # analyze
