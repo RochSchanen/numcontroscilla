@@ -20,13 +20,13 @@ ghdl -a .\nco\placc.vhdl
 ghdl -a .\nco\plnco.vhdl
 
 echo analyse .\plpr\*
-ghdl -a --ieee=synopsys .\plpr\plpr.vhdl
 ghdl -a .\plpr\fifostream.vhdl
+ghdl -a --ieee=synopsys .\plpr\plpr.vhdl
 
 echo analyse .\*_bench.vhdl
 rem ghdl -a --ieee=synopsys .\fpga_bench.vhdl
-rem ghdl -a --ieee=synopsys .\plpr_bench.vhdl
-ghdl -a .\fifostream_bench.vhdl
+ghdl -a --ieee=synopsys .\plpr_bench.vhdl
+rem ghdl -a .\fifostream_bench.vhdl
 
 rem ---------
 rem elaborate
@@ -34,22 +34,22 @@ rem ---------
 
 echo elaborate
 rem ghdl -e --ieee=synopsys fpga_bench
-rem ghdl -e --ieee=synopsys plpr_bench
-ghdl -e fifostream_bench
+ghdl -e --ieee=synopsys plpr_bench
+rem ghdl -e fifostream_bench
 
 rem --------------
 rem run and export
 rem --------------
 
 echo run
-rem ghdl -r --ieee=synopsys plpr_bench --stop-time=%STOP_TIME% --vcd=.outputs\bench.vcd
-ghdl -r fifostream_bench --stop-time=%STOP_TIME% --vcd=.outputs\bench.vcd
+ghdl -r --ieee=synopsys plpr_bench --stop-time=%STOP_TIME% --vcd=.outputs\bench.vcd
+rem ghdl -r fifostream_bench --stop-time=%STOP_TIME% --vcd=.outputs\bench.vcd
 
 rem --------
 rem clean up
 rem --------
 
-del work-obj93.cf
+rem del work-obj93.cf
 
 rem ----
 rem done

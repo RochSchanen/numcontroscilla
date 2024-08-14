@@ -1,0 +1,37 @@
+v 3
+file . ".\plpr_bench.vhdl" "20240814072352.000" "20240814102253.100":
+  entity plpr_bench at 15( 421) + 0 on 209;
+  architecture plpr_bench_arch of plpr_bench at 31( 714) + 0 on 210;
+file . ".\plpr\fifostream.vhdl" "20240814072352.000" "20240814102252.987":
+  entity fifostream at 18( 823) + 0 on 205;
+  architecture fifostream_arch of fifostream at 30( 1251) + 0 on 206;
+file . ".\nco\placc.vhdl" "20240731114704.000" "20240814102252.884":
+  entity placc at 18( 605) + 0 on 201;
+  architecture placc_arch of placc at 37( 1222) + 0 on 202;
+file . ".\nco\addsync.vhdl" "20240731114704.000" "20240814102252.784":
+  entity addsync at 18( 583) + 0 on 197;
+  architecture addsync_arch of addsync at 32( 1015) + 0 on 198;
+file . ".\bench\benchcounter.vhdl" "20240808084418.000" "20240814102252.685":
+  entity benchcounter at 20( 636) + 0 on 193;
+  architecture benchcounter_arch of benchcounter at 42( 1211) + 0 on 194;
+file . ".\bench\benchreset.vhdl" "20240805134620.000" "20240814102252.582":
+  entity benchreset at 19( 643) + 0 on 189;
+  architecture benchreset_arch of benchreset at 37( 975) + 0 on 190;
+file . ".\bench\benchclock.vhdl" "20240731114704.000" "20240814102252.533":
+  entity benchclock at 20( 639) + 0 on 187;
+  architecture benchclock_arch of benchclock at 38( 975) + 0 on 188;
+file . ".\bench\benchrom.vhdl" "20240807090334.000" "20240814102252.634":
+  entity benchrom at 20( 644) + 0 on 191;
+  architecture benchrom_arch of benchrom at 47( 1420) + 0 on 192;
+file . ".\nco\fifobuf.vhdl" "20240731114704.000" "20240814102252.737":
+  entity fifobuf at 21( 725) + 0 on 195;
+  architecture fifobuf_arch of fifobuf at 36( 1190) + 0 on 196;
+file . ".\nco\plcnt.vhdl" "20240731114704.000" "20240814102252.834":
+  entity plcnt at 17( 540) + 0 on 199;
+  architecture plcnt_arch of plcnt at 36( 1102) + 0 on 200;
+file . ".\nco\plnco.vhdl" "20240731114704.000" "20240814102252.935":
+  entity plnco at 19( 695) + 0 on 203;
+  architecture plnco_arch of plnco at 40( 1320) + 0 on 204;
+file . ".\plpr\plpr.vhdl" "20240814092250.000" "20240814102253.037":
+  entity plpr at 18( 735) + 0 on 207;
+  architecture plpr_arch of plpr at 36( 1400) + 0 on 208;

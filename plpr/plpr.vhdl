@@ -6,7 +6,7 @@
 -- comments:
 -- synchronous with the rising edge of trigger signal t
 -- asynchronously cleared when reset signal r is low
--- generic size has been tested for integers larger than 4 <- only 4 so far
+-- generic SIZE has been tested for integers larger than 4 <- only 4 so far
 -- compute the product of two signed binary numbers, the result is signed
 -- this version has redondant pipeline (pipelines running in parallel
 -- that carry the exact same information)
@@ -24,49 +24,51 @@ use work.all;
 
 --------------
 entity plpr is
-    generic (size : integer := 4);                      -- factors size
+    generic (SIZE : integer := 4);                      -- factors SIZE
     port (r : in  std_logic;                            -- reset (active low)
           t : in  std_logic;                            -- trigger (rising edge)
-          a : in  std_logic_vector(size-1 downto 0);    -- input a (4 bits)
-          b : in  std_logic_vector(size-1 downto 0);    -- input b (4 bits)
-          p : out std_logic_vector(2*size-1 downto 0)); -- product ab (8 bits)
+          a : in  std_logic_vector(SIZE-1 downto 0);    -- input a (4 bits)
+          b : in  std_logic_vector(SIZE-1 downto 0);    -- input b (4 bits)
+          p : out std_logic_vector(2*SIZE-1 downto 0)); -- product ab (8 bits)
 end entity plpr;
 
 ---------------------------------
 architecture plpr_arch of plpr is
 
     -------------------------------
-    constant N0  : integer := size;    
-    constant N1  : integer := size-1;
-    constant N2  : integer := size-2;
+    --constant N0  : integer := SIZE;    
+    constant N1  : integer := SIZE-1;
+    --constant N2  : integer := SIZE-2;
 
     ---------------------------------
-    constant NN0 : integer := 2*size;
-    constant NN1 : integer := 2*size-1;
-    constant NN2 : integer := 2*size-2;
+    --constant NN0 : integer := 2*SIZE;
+    constant NN1 : integer := 2*SIZE-1;
+    --constant NN2 : integer := 2*SIZE-2;
 
     ---------------------------------------------------------------
-    type type_1 is array (0 to N1,  0 to N1) of std_logic;
+    type type_1 is array (0 to N1,  0 to N1)  of std_logic;
     type type_2 is array (0 to NN1, 0 to NN1) of std_logic;
-    type type_3 is array (0 to N1,  0 to N1, 0 to 4*N0) of std_logic;
+    type type_3 is array (0 to N1,  0 to N1)  of std_logic_vector(2*N1 downto 0);
 
-    ------------------------------------------------
-    -- connections to the bit products (size x size)
+    ------------------------------------------------------
+    -- connections to the bit products array (SIZE x SIZE) 
     -- (the full square is used)
-    signal pi: type_1;
+    -- bp is for bit product
+    signal bp: type_1;
 
-    ---------------------------------------------------------
-    -- connections to the add-sync entities (size x size x 4)
+    -----------------------------------------------------------
+    -- connections to the add sync semi-array (SIZE x SIZE x 4)
     -- (top-left triangle plus diagonal means a bit more than half are used)
-    signal do, co: type_2;
+    -- so is for sum out, co is for carry out
+    signal so, co: type_2;
 
-    ------------------------------------------------------------
-    -- connections to the input streams (size x size x size x 4)
+    -------------------------------------------------------------------
+    -- vector signals to the fifo stream array (SIZE x SIZE x SIZE x 4)
     -- (only few connections are used, but a clean indexing is necessary)
     signal pp: type_3;
 
-    -----------------------------------------
-    -- data bit row n from cell position i, j
+    -----------------------------------------------------------------
+    -- returns the n index of bit product from the cell position i, j
     function n(i: integer; j: integer) return integer is    
         variable x: integer;
     begin
@@ -75,11 +77,11 @@ architecture plpr_arch of plpr is
     end function;
 
     --------------------------------------------
-    -- data bit column m from cell position i, j
+    -- returns the m index of bit product from the cell position i, j
     function m(i: integer; j: integer) return integer is    
         variable x: integer;
     begin
-        if i-j < size then x := i-j; else x := 3; end if;
+        if i-j < SIZE then x := i-j; else x := 3; end if;
         return x;
     end function;
 
@@ -92,9 +94,9 @@ begin
     ---------------
     -- BIT PRODUCTS
     ---------------
-    subnet_a: for j in 0 to N1 generate
-        subnet_b: for i in 0 to N1 generate
-            pi(i,j) <= a(i) and b(j);
+    subnet_a: for j in 0 to SIZE-1 generate
+        subnet_b: for i in 0 to SIZE-1 generate
+            bp(i,j) <= a(i) and b(j);
         end generate subnet_b;
     end generate subnet_a;
 
@@ -102,24 +104,28 @@ begin
     -- INPUT STREAMS
     ----------------
 
-    subnet_fifo_A: for j in NN1 downto N0 generate
+    --subnet_fifo_A: for j in 2*SIZE-1 downto SIZE generate
 
-        fifo_stream_mn: entity fifostream
+    --    -- the value of i is 2*SIZE-1 <=> NN1
 
-            -- fifo length (i+j)
-            generic map(NN1+j)
+    --    fifo_stream_mn: entity fifostream
+            
+    --        generic map(
+    --            -- fifo length (i+j)
+    --            NN1+j)
+            
+    --        port map(
+    --            -- sync signals
+    --            r, t,
+    --            -- bit product a(n) & b(m)
+    --            bp( n(NN1, j),              -- n(i, j)
+    --                m(NN1, j)),             -- m(i, j)
+    --            -- reference signal (n, m)
+    --            pp( n(NN1, j),              -- n(i, j)
+    --                m(NN1, j))              -- m(i, j)
+    --                (NN1+j downto 0));      -- i+j:0:-1
 
-            -- sync signals
-            port map(r, t,
-                pi( -- bit product a(n) & b(m)
-                    n(NN1, j),
-                    m(NN1, j)),
-                pp( -- reference signal n, m, k
-                    n(NN1, j),
-                    m(NN1, j),
-                    NN1+j downto 0));
-
-    end generate subnet_fifo_A;
+    --end generate subnet_fifo_A;
 
     --subnet_fifo_B: for j in N1 downto 0 generate
     --    fifo_stream_mn: entity fifostream
@@ -134,8 +140,8 @@ begin
     --                NN1+j));
     --end generate subnet_fifo_B;
 
-    --subnet_fifo_j: for j in 0 to size-1 generate
-    --    subnet_fifo_i: for i in 0 to size-1 generate
+    --subnet_fifo_j: for j in 0 to SIZE-1 generate
+    --    subnet_fifo_i: for i in 0 to SIZE-1 generate
     --    fifo_stream_mn: entity fifostream
     --        generic (NN1+j) -- fifo length (i+j)
     --        port map (r, t, -- sync signals
