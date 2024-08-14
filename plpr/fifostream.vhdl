@@ -11,7 +11,8 @@
 -- size = 1 means that the pipe is a single flip-flop (2 indices: 0 and 1)
 -- size = N means a linked chain of N flip-flops (N+1 indices 0, 1, up to N)
 -- the ouput o(0) is a straight unbuffered copy of the input bit i
--- the other output form a copy of the buffered stream.
+-- the other outputs are a copy of the current buffered stream: this
+-- allows to pick up the same signal at the appropriate instant or delay
 
 -------------
 library ieee;
