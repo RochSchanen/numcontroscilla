@@ -83,13 +83,13 @@ begin
         generic map(SIZE)
         port map(r, t, a, b, q);    -- scan through all
 
-    -- --synchronised reporting (use file outputs instead for cleaner testing)
-    --process(r, t) is
-    --begin
-    --    if rising_edge(t) then
-    --        report to_string(a) & "x" & to_string(b) & "=" & to_string(q) ;
-    --    end if;
-    --end process;
+     --synchronised reporting (use file outputs instead for cleaner testing)
+    process(r, t) is
+    begin
+        if rising_edge(t) then
+            report to_string(a) & "x" & to_string(b) & "=" & to_string(q) ;
+        end if;
+    end process;
 
 end plpr_bench_arch;
 
