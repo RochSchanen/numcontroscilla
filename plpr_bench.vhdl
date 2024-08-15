@@ -32,7 +32,7 @@ architecture plpr_bench_arch of plpr_bench is
 
     -- configuration
 
-    constant SIZE : integer := 4;
+    constant SIZE : integer := 8;
 
     -- signals
     signal r : std_logic;                           -- bench reset
@@ -75,21 +75,21 @@ begin
         port map(r, t, c);  -- a: counter output
 
     -- extract subsets
-    a <= c(3 downto 0);
-    b <= c(7 downto 4);
+    a <= c(SIZE-1 downto 0);
+    b <= c(2*SIZE-1 downto SIZE);
 
     -- instanciate pipelined nco
     pl_pr_1: entity plpr
         generic map(SIZE)
         port map(r, t, a, b, q);    -- scan through all
 
-     --synchronised reporting (use file outputs instead for cleaner testing)
-    process(r, t) is
-    begin
-        if rising_edge(t) then
-            report to_string(a) & "x" & to_string(b) & "=" & to_string(q) ;
-        end if;
-    end process;
+    -- --synchronised reporting (use file outputs instead for cleaner testing)
+    --process(r, t) is
+    --begin
+    --    if rising_edge(t) then
+    --        report to_string(a) & "x" & to_string(b) & "=" & to_string(q) ;
+    --    end if;
+    --end process;
 
 end plpr_bench_arch;
 
