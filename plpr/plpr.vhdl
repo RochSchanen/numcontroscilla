@@ -6,7 +6,8 @@
 -- comments:
 -- synchronous with the rising edge of trigger signal t
 -- asynchronously cleared when reset signal r is low
--- generic SIZE has been tested for integers larger than 4 <- only 4 so far
+-- generic SIZE has been tested for all values between 2 and 8, and for 12 bits
+-- tested with some random and extremal values for 16 bits and 32 bits. 
 -- compute the product of two signed binary numbers, the result is signed
 -- this version has redondant pipeline (pipelines running in parallel
 -- that carry the exact same information)

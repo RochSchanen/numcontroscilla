@@ -1,6 +1,15 @@
 #!/bin/bash
 
-STOP_TIME="5200ns"
+# STOP_TIME="83886080ns" # 1<<12
+# STOP_TIME="327840ns"   # 1<<8
+# STOP_TIME="82070ns"    # 1<<7
+# STOP_TIME="20640ns"    # 1<<6
+# STOP_TIME="5280ns"     # 1<<5
+# STOP_TIME="1360ns"     # 1<<4
+# STOP_TIME="400ns"      # 1<<3
+# STOP_TIME="200ns"      # 1<<2
+
+STOP_TIME="350ns"
 
 #########
 # analyze
@@ -24,27 +33,28 @@ ghdl -a ./plpr/fifostream.vhdl
 ghdl -a --ieee=synopsys ./plpr/plpr.vhdl
 
 echo "analyse ./*_bench.vhdl"
-# ghdl -a -fsynopsys ./fpga_bench.vhdl
 ghdl -a --ieee=synopsys ./plpr_bench.vhdl
-# ghdl -a ./fifostream_bench.vhdl
 
 ###########
 # elaborate
 ###########
 
 echo "elaborate"
-# ghdl -e -fsynopsys fpga_bench
 ghdl -e -fsynopsys plpr_bench
-# ghdl -e fifostream_bench
 
 ################
 # run and export
 ################
 
 echo "run"
-# ghdl -r -fsynopsys fpga_bench --stop-time=${STOP_TIME} --vcd=.outputs/bench.vcd
 ghdl -r -fsynopsys plpr_bench --stop-time=${STOP_TIME} --vcd=.outputs/bench.vcd
-# ghdl -r fifostream_bench --stop-time=${STOP_TIME} --vcd=.outputs/bench.vcd
+# ghdl -r -fsynopsys plpr_bench --stop-time=${STOP_TIME}
+
+#######
+# check 
+#######
+
+python3 ./bench.py
 
 ##########
 # clean up
